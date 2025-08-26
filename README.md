@@ -69,5 +69,6 @@ BNE   %1, %0, 18        Jump back to inst 17 if SW8 is not 0
 
 
 # Design Block Diagram
- 
+![cpuArchitecture](https://github.com/user-attachments/assets/c467258d-b237-4359-aaa1-11e1ee9a0399)
+
 

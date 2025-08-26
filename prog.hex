@@ -1,0 +1,27 @@
+// sample picoMIPS program 1
+// 17-bit instructions
+// I-format: 3b opcode, 3b %d, 3b %s, 7b immediate or address
+// R-format: 3b opcode, 3b %d, 3b %s, 3b %d, 4b padding
+// HEX /////////// BINARY  ///////////////////// ASSEMBLER /////////
+
+2280	//001 000 101 000 0000 		add	  %5, %0, %0		clear reg 5
+2200	//001 000 100 000 0000  	add	  %4, %0, %0		clear reg 4
+E401	//111 001 000 0000001   	BEQ   %1, %0, 1			Only proceed with SW8 is 1
+A980	//101 010 011 0000000   	lw    %3,  0(%2)		reg 3 <- W[i]
+CE23	//110 011 100 0100011   	muli  %4,  %3, 35       reg 4 <- W[i]*35
+A9FF	//101 010 011 1111111   	lw    %3, -1(%2)		reg 3 <- W[i-1]
+CD9D	//110 011 011 0011101   	muli  %3,  %3, 29		reg 3 <- W[i-1]*29
+2E40	//001 011 100 100 0000   	add   %4, %3, %4		reg 4 <- W[i]*35 + W[i-1]*29
+A9FE	//101 010 011 1111110   	lw    %3, -2(%2)		reg 3 <- W[i-2]
+CD91	//110 011 011 0010001  		muli  %3,  %3, 17		reg 3 <- W[i-2]*17
+2E40	//001 011 100 100 0000	  	add   %4, %3, %4		reg 4 <- W[i]*35 + W[i-1]*29 + W[i-2]*17
+A981	//101 010 011 0000001  		lw    %3,  1(%2)		reg 3 <- W[i+1]
+CD9D	//110 011 011 0011101	  	muli  %3,  %3, 29       reg 3 <- W[i+1]*29
+2E40	//001 011 100 100 0000  	add   %4, %3, %4		reg 4 <- W[i]*35 + W[i-1]*29 + W[i-2]*17 + W[i+1]*29
+A982	//101 010 011 0000010  		lw    %3,  2(%2)		reg 3 <- W[i+2]
+CD91	//110 011 011 0010001  		muli  %3,  %3, 17		reg 3 <- W[i+2]*17
+2E40	//001 011 100 100 0000	  	add   %4, %3, %4       	reg 4 <- W[i]*35 + W[i-1]*29 + W[i-2]*17 + W[i+1]*29 + W[i+2]*17
+32D0	//001 100 101 101 0000  	add   %5, %4, %5        reg 5 connected to LEDs
+E400	//111 001 000 0000000  		BEQ   %1, %0, 0			Only proceeed when SW8 is 0
+6012	//011 000 000 0010010		BNE	  %1, %0, 18		Jump back to inst 17 if SW8 is not 0
+									
